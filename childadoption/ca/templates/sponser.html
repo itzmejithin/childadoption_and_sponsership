@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 20px;
+    }
+
+    h2 {
+        color: #333;
+    }
+
+    form {
+        margin-bottom: 20px;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+    }
+
+    select, input[type="number"], input[type="text"] {
+        width: 100%;
+        padding: 8px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+
+    button[type="submit"] {
+        background-color: #4CAF50;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    button[type="submit"]:hover {
+        background-color: #45a049;
+    }
+
+    h1 {
+        color: #333;
+        margin-top: 20px;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    th, td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+    }
+
+    th {
+        background-color: #f2f2f2;
+    }
+
+    tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+</style>
+<body>
+    
+
+<h2>Sponsor a Child</h2>
+<form method="post" action="{% url 'sponsor_child' %}">
+    {% csrf_token %}
+    <label for="child">Select a Child:</label>
+    <select name="child_id" id="child">
+        {% for child in children %}
+        <option value="{{ child.id }}">{{ child.name }}</option>
+        {% endfor %}
+    </select><br>
+    <label for="sponsor_type">Sponsor Type:</label>
+    <select name="sponsor_type" id="sponsor_type">
+        <option value="medical">Medical</option>
+        <option value="clothings">Clothings</option>
+        <option value="education">Education</option>
+        <option value="sports">Sports</option>
+        <option value="food_and_nutrition">Food and Nutrition</option>
+    </select><br>
+    
+    <!-- Credit Card Details -->
+    <label for="credit_cardno">Credit Card Number:</label>
+    <input type="text" name="credit_cardno" id="credit_cardno"><br>
+    <label for="exp">Expiration Date:</label>
+    <input type="text" name="exp" id="exp" placeholder="MM/YYYY"><br>
+    <label for="ccv">CCV:</label>
+    <input type="text" name="ccv" id="ccv"><br>
+    <label for="amount">Amount:</label>
+    <input type="number" name="budget" id="budget"><br>
+
+    <button type="submit">Sponsor</button>
+</form>
+
+
+<h1>List of Children</h1>
+<table border="1">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Age</th>
+            <th>Gender</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for child in children %}
+        <tr>
+            <td>{{ child.name }}</td>
+            <td>{{ child.age }}</td>
+            <td>{{ child.gender }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+</body>
+</html>
